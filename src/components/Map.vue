@@ -24,9 +24,18 @@ export default {
         zoom: zoomLevel,
         center: center
       })
-    })
 
-    console.log(map)
+      map.addListener('click', e => {
+        let newPlace = {
+          id: null,
+          name: null,
+          lat: e.latLng.lat(),
+          lng: e.latLng.lng()
+        }
+
+        console.log(newPlace)
+      })
+    })
 
     GoogleMapsLoader.onLoad(() => {
       console.log('Map initialized')
@@ -38,7 +47,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .map {
-  width: 800px;
+  width: 100%;
   height: 400px;
 }
 </style>

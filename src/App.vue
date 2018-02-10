@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <Map/>
+    <PlacesManager/>
   </div>
 </template>
 
 <script>
-import Map from './components/Map'
+import PlacesManager from './components/PlacesManager'
 
 export default {
   name: 'App',
   components: {
-    Map
+    PlacesManager
   }
 }
 </script>
