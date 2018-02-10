@@ -2,7 +2,9 @@
   <div>
     <h2>Places List</h2>
     <ul>
-      <li v-for="place in placesList" v-on:click="showPlace(place)" v-bind:key="place.id">
+      <li v-for="place in store.getPlaces()"
+          v-bind:key="place.id"
+          v-on:click="showPlace(place)">
         {{place.name}}
       </li>
     </ul>
@@ -10,21 +12,18 @@
 </template>
 
 <script>
+import store from '../store'
+
 export default {
   name: 'PlacesList',
   data () {
     return {
-      placesList: [{
-        id: 1,
-        name: 'aa 1',
-        lat: 44.0022,
-        lng: 40.3304
-      }]
+      store
     }
   },
   methods: {
     showPlace (place) {
-      console.log(place)
+      // console.log(place)
     }
   }
 }
