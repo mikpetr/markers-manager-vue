@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     showPlace (place) {
-      // console.log(place)
+      this.store.changeSelectedPlace(place)
     }
   }
 }

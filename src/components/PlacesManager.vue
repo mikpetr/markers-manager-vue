@@ -21,10 +21,6 @@ export default {
   },
   data () {
     return {}
-  },
-  created () {
-  },
-  mounted () {
   }
 }
 </script>

@@ -19,11 +19,15 @@ export default {
   name: 'Map',
   data () {
     return {
+      store,
       map: null,
       marker: null,
       google: null,
       selectedPlace: null
     }
+  },
+  created () {
+    this.$watch(() => this.store.getSelectedPlace(), this.showPlace)
   },
   mounted () {
     let center
@@ -52,11 +56,19 @@ export default {
         map: null
       })
 
-      this.map.addListener('click', this.addMarker)
+      this.map.addListener('click', this.onMapClick)
     })
   },
   methods: {
-    addMarker (e) {
+    showPlace (place) {
+      this.selectedPlace = place
+      this.setMarker(place.markerPosition)
+    },
+    setMarker (position) {
+      this.marker.setPosition(position)
+      this.marker.setMap(this.map)
+    },
+    onMapClick (e) {
       let pointerPosition
 
       if (e.pixel) {
@@ -73,24 +85,21 @@ export default {
         return
       }
 
-      this.selectedPlace = {
+      const newPlace = {
         id: null,
         name: null,
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
+        markerPosition: {
+          lat: e.latLng.lat(),
+          lng: e.latLng.lng()
+        },
         pointerPosition
       }
 
-      this.marker.setPosition({
-        lat: this.selectedPlace.lat,
-        lng: this.selectedPlace.lng
-      })
-
-      this.marker.setMap(this.map)
+      this.showPlace(newPlace)
     },
     onEnter () {
       this.selectedPlace.id = (new Date()).getTime()
-      store.addPlace(this.selectedPlace)
+      this.store.addPlace(this.selectedPlace)
     }
   }
 }
