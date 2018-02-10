@@ -106,27 +106,27 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 
 .map-container {
   position: relative;
-}
 
-.map {
-  width: 100%;
-  height: 400px;
-}
+  .map {
+    width: 100%;
+    height: 400px;
+  }
 
-.marker-name {
-  position: absolute;
-  z-index: 1;
-  margin-left: -75px;
-  margin-top: -70px;
-}
+  .marker-name {
+    position: absolute;
+    z-index: 1;
+    margin-left: -75px;
+    margin-top: -70px;
 
-.marker-name input {
-  width: 150px;
-  height: 24px;
-  box-sizing: border-box;
+    input {
+      width: 150px;
+      height: 24px;
+      box-sizing: border-box;
+    }
+  }
 }
 </style>
