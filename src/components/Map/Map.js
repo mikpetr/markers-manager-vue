@@ -89,12 +89,18 @@ export default {
           lat: e.latLng.lat(),
           lng: e.latLng.lng()
         },
-        pointerPosition
+        pointerPosition,
+        isVisited: false
       }
 
       this.showPlace(newPlace, false)
     },
     savePlace () {
+      if (!this.selectedPlace.name) {
+        alert('Please fill the name of that place!')
+        return
+      }
+
       if (this.selectedPlace.id) {
         // editing
         this.store.editPlace(this.selectedPlace)

@@ -10,8 +10,11 @@
           v-on:click="showPlace(place)">
         {{place.name}}
 
-        <i class="icon remove" @click.stop="removePlace(place.id)"></i>
-        <i class="icon empty-star"></i>
+        <i class="icon remove"
+           @click.stop="removePlace(place.id)"></i>
+        <i class="icon"
+           @click.stop="toggleVisitedState(place.id)"
+           v-bind:class="{ star: place.isVisited, 'empty-star': !place.isVisited }"></i>
       </li>
     </ul>
   </div>

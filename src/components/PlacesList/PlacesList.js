@@ -42,6 +42,9 @@ export default {
           this.store.changeSelectedPlace(null)
         }
       }
+    },
+    toggleVisitedState (placeId) {
+      this.store.togglePlaceVisitedState(placeId)
     }
   }
 }

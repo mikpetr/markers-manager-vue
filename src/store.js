@@ -3,6 +3,13 @@ export default {
     places: [],
     selectedPlace: null
   },
+  findPlaceIndex (placeId) {
+    let placeInState = this.state.places.find(tmpPlace => {
+      return tmpPlace.id === placeId
+    })
+
+    return this.state.places.indexOf(placeInState)
+  },
   addPlace (place) {
     // Store properties must be immutable
     this.state.places = [
@@ -11,24 +18,21 @@ export default {
     ]
   },
   editPlace (place) {
-    let placeInState = this.state.places.find(tmpPlace => {
-      return tmpPlace.id === place.id
-    })
-
-    let index = this.state.places.indexOf(placeInState)
-
-    this.state.places[index] = place
+    this.state.places[this.findPlaceIndex(place.id)] = place
 
     this.state.places = [...this.state.places]
   },
   removePlace (placeId) {
-    let placeInState = this.state.places.find(tmpPlace => {
+    this.state.places.splice(this.findPlaceIndex(placeId), 1)
+
+    this.state.places = [...this.state.places]
+  },
+  togglePlaceVisitedState (placeId) {
+    let place = this.state.places.find(tmpPlace => {
       return tmpPlace.id === placeId
     })
 
-    let index = this.state.places.indexOf(placeInState)
-
-    this.state.places.splice(index, 1)
+    place.isVisited = !place.isVisited
 
     this.state.places = [...this.state.places]
   },
