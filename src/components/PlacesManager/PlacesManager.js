@@ -6,8 +6,5 @@ export default {
   components: {
     Map,
     PlacesList
-  },
-  data () {
-    return {}
   }
 }
