@@ -10,6 +10,17 @@ export default {
       {...place}
     ]
   },
+  editPlace (place) {
+    let placeInState = this.state.places.find(tmpPlace => {
+      return tmpPlace.id === place.id
+    })
+
+    let index = this.state.places.indexOf(placeInState)
+
+    this.state.places[index] = place
+
+    this.state.places = [...this.state.places]
+  },
   getPlaces () {
     return [...this.state.places]
   },

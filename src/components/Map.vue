@@ -3,10 +3,23 @@
     <div class="map"></div>
     <div class="marker-name"
          v-if="selectedPlace"
-         v-bind:style="{ top: selectedPlace.pointerPosition.y + 'px', left: selectedPlace.pointerPosition.x + 'px' }">
-      <input type="text"
-             v-model="selectedPlace.name"
-             @keyup.enter="onEnter" />
+         v-bind:style="{ top: selectedPlace.pointerPosition.y + 'px', left: selectedPlace.pointerPosition.x + 'px' }"
+         v-bind:class="{ 'read-only': selectedPlace.readOnly }">
+      <div v-if="selectedPlace.readOnly" class="name-wrapper">
+        {{selectedPlace.name}}
+        <i class="edit-icon" @click="editPlace"></i>
+      </div>
+      <div v-else>
+        <div>
+          <input type="text"
+                v-model="selectedPlace.name"
+                @keyup.enter="savePlace" />
+        </div>
+        <div class="controls">
+          <button @click="savePlace">Save</button>
+          <button @click="clearMap">Close</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -60,9 +73,14 @@ export default {
     })
   },
   methods: {
-    showPlace (place) {
+    showPlace (place, readOnly) {
       this.selectedPlace = place
+      this.selectedPlace.readOnly = typeof readOnly !== 'undefined' ? readOnly : true
       this.setMarker(place.markerPosition)
+    },
+    clearMap () {
+      this.selectedPlace = null
+      this.marker.setMap(null)
     },
     setMarker (position) {
       this.marker.setPosition(position)
@@ -95,11 +113,22 @@ export default {
         pointerPosition
       }
 
-      this.showPlace(newPlace)
+      this.showPlace(newPlace, false)
     },
-    onEnter () {
-      this.selectedPlace.id = (new Date()).getTime()
-      this.store.addPlace(this.selectedPlace)
+    savePlace () {
+      if (this.selectedPlace.id) {
+        // editing
+        this.store.editPlace(this.selectedPlace)
+      } else {
+        // create new place
+        this.selectedPlace.id = (new Date()).getTime()
+        this.store.addPlace(this.selectedPlace)
+      }
+
+      this.clearMap()
+    },
+    editPlace () {
+      this.selectedPlace.readOnly = false
     }
   }
 }
@@ -120,12 +149,49 @@ export default {
     position: absolute;
     z-index: 1;
     margin-left: -75px;
-    margin-top: -70px;
+    margin-top: -90px;
+    width: 150px;
+
+    &.read-only {
+      margin-top: -70px;
+      text-align: center;
+    }
+
+    .name-wrapper {
+      position: relative;
+
+      &:hover {
+        .edit-icon {
+          display: block;
+        }
+      }
+
+      .edit-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: none;
+        background-image: url('../assets/edit-icon.png');
+        background-size: cover;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+      }
+    }
 
     input {
-      width: 150px;
+      width: 100%;
       height: 24px;
       box-sizing: border-box;
+    }
+
+    .controls {
+      display: flex;
+
+      button {
+        width: 50%;
+        box-sizing: border-box;
+      }
     }
   }
 }
