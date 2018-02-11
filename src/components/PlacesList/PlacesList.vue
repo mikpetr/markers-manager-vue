@@ -4,11 +4,14 @@
     <div>
       Search: <input v-model="filterText" type="text" />
     </div>
-    <ul>
+    <ul class="places-list">
       <li v-for="place in filteredPlaces"
           v-bind:key="place.id"
           v-on:click="showPlace(place)">
         {{place.name}}
+
+        <i class="icon remove" @click.stop="removePlace(place.id)"></i>
+        <i class="icon empty-star"></i>
       </li>
     </ul>
   </div>
@@ -17,4 +20,4 @@
 <script src="./PlacesList.js"></script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped></style>
+<style src="./places-list.scss" lang="scss" scoped></style>

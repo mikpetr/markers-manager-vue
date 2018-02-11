@@ -14,7 +14,11 @@ export default {
   },
   created () {
     this.$watch(() => this.store.getSelectedPlace(), place => {
-      this.showPlace(place)
+      if (place) {
+        this.showPlace(place)
+      } else {
+        this.clearMap()
+      }
     })
   },
   mounted () {

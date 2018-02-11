@@ -1,0 +1,31 @@
+ul.places-list {
+  list-style-type: none;
+
+  li {
+    text-align: left;
+    line-height: 20px;
+    margin: 4px 0;
+
+    .icon {
+      float: right;
+      width: 20px;
+      height: 20px;
+      display: block;
+      background-size: cover;
+      cursor: pointer;
+      margin-left: 4px;
+
+      &.remove {
+        background-image: url('../../assets/trash-icon.png');
+      }
+
+      &.star {
+        background-image: url('../../assets/star-icon.png');
+      }
+
+      &.empty-star {
+        background-image: url('../../assets/empty-star-icon.png');
+      }
+    }
+  }
+}

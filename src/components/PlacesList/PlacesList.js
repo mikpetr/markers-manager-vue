@@ -33,6 +33,15 @@ export default {
   methods: {
     showPlace (place) {
       this.store.changeSelectedPlace(place)
+    },
+    removePlace (placeId) {
+      if (window.confirm('Are you sure, that you want to remove this place?')) {
+        this.store.removePlace(placeId)
+
+        if (this.store.getSelectedPlace() && this.store.getSelectedPlace().id === placeId) {
+          this.store.changeSelectedPlace(null)
+        }
+      }
     }
   }
 }
