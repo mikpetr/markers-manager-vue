@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import PlacesManager from './components/PlacesManager'
+import PlacesManager from './components/PlacesManager/PlacesManager'
 
 export default {
   name: 'App',

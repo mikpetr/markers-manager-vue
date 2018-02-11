@@ -1,32 +1,5 @@
-<template>
-  <div class="map-container">
-    <div class="map"></div>
-    <div class="marker-name"
-         v-if="selectedPlace"
-         v-bind:style="{ top: selectedPlace.pointerPosition.y + 'px', left: selectedPlace.pointerPosition.x + 'px' }"
-         v-bind:class="{ 'read-only': selectedPlace.readOnly }">
-      <div v-if="selectedPlace.readOnly" class="name-wrapper">
-        {{selectedPlace.name}}
-        <i class="edit-icon" @click="editPlace"></i>
-      </div>
-      <div v-else>
-        <div>
-          <input type="text"
-                v-model="selectedPlace.name"
-                @keyup.enter="savePlace" />
-        </div>
-        <div class="controls">
-          <button @click="savePlace">Save</button>
-          <button @click="clearMap">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script>
 import GoogleMapsLoader from 'google-maps'
-import store from '../store'
+import store from '../../store'
 
 export default {
   name: 'Map',
@@ -40,7 +13,9 @@ export default {
     }
   },
   created () {
-    this.$watch(() => this.store.getSelectedPlace(), this.showPlace)
+    this.$watch(() => this.store.getSelectedPlace(), place => {
+      this.showPlace(place)
+    })
   },
   mounted () {
     let center
@@ -132,67 +107,3 @@ export default {
     }
   }
 }
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-
-.map-container {
-  position: relative;
-
-  .map {
-    width: 100%;
-    height: 400px;
-  }
-
-  .marker-name {
-    position: absolute;
-    z-index: 1;
-    margin-left: -75px;
-    margin-top: -90px;
-    width: 150px;
-
-    &.read-only {
-      margin-top: -70px;
-      text-align: center;
-    }
-
-    .name-wrapper {
-      position: relative;
-
-      &:hover {
-        .edit-icon {
-          display: block;
-        }
-      }
-
-      .edit-icon {
-        position: absolute;
-        top: 0;
-        right: 0;
-        display: none;
-        background-image: url('../assets/edit-icon.png');
-        background-size: cover;
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-      }
-    }
-
-    input {
-      width: 100%;
-      height: 24px;
-      box-sizing: border-box;
-    }
-
-    .controls {
-      display: flex;
-
-      button {
-        width: 50%;
-        box-sizing: border-box;
-      }
-    }
-  }
-}
-</style>
